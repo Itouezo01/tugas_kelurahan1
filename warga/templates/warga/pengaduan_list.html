@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Pengaduan Warga</title>
+</head>
+<body>
+    <h1>Daftar Pengaduan Warga</h1>
+
+    <!-- Ke form tambah pengaduan -->
+    <a href="{% url 'pengaduan-tambah' %}">Tambah Pengaduan Baru</a> |
+    <a href="{% url 'warga_list' %}">Kembali ke Daftar Warga</a>
+
+    <hr>
+
+    <ul>
+        {% for pengaduan in object_list %}
+            <li>
+                <h3>{{ pengaduan.judul }}</h3>
+                <p><strong>Pelapor:</strong> {{ pengaduan.pelapor.nama_lengkap }}</p>
+                <p>{{ pengaduan.deskripsi }}</p>
+                <p><strong>Status:</strong> {{ pengaduan.get_status_display }}</p>
+                <p><strong>Tanggal Pengaduan:</strong> {{ pengaduan.tanggal_pengaduan|date:"d M Y, H:i" }}</p>
+
+                <!-- Tambahan link edit & hapus -->
+                <p>
+                    <a href="{% url 'pengaduan_edit' pengaduan.pk %}">Edit</a> |
+                    <a href="{% url 'pengaduan_delete' pengaduan.pk %}">Hapus</a>
+                </p>
+
+                <hr>
+            </li>
+        {% empty %}
+            <li>Tidak ada pengaduan yang tercatat.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
