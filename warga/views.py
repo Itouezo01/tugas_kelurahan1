@@ -3,6 +3,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Warga, Pengaduan
 from django.urls import reverse_lazy
 from .forms import WargaForm, PengaduanForm
+from rest_framework.generics import ListAPIView,RetrieveAPIView
+from .serializers import WargaSerializer, PengaduanSerializer
+
 
 # Create your views here.
 class WargaListView(ListView):
@@ -47,3 +50,11 @@ class PengaduanDeleteView(DeleteView):
     model = Pengaduan
     template_name = 'warga/pengaduan_confirm_delete.html'
     success_url = '/warga/pengaduan/'
+
+class WargaListAPIView(ListAPIView):
+    queryset = Warga.objects.all()
+    serializer_class = WargaSerializer
+
+class pengaduanListAPIView(ListAPIView):
+    queryset = Pengaduan.objects.all()
+    serializer_class = PengaduanSerializer
